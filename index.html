@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repositorio de formación · Gerardo Narvaez De Los Santos</title>
+<style>
+:root{--bg:#f5f6fb;--card:#fff;--text:#1b1f3b;--muted:#5d6385;--line:#e3e5f1;--accent:#4f46e5;--accent2:#06b6d4;
+--c-datos:#7c3aed;--c-excel:#16a34a;--c-sql:#0284c7;--c-prog:#ea580c;--c-idioma:#db2777}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1226;--card:#181c38;--text:#eceefb;--muted:#9aa0c7;--line:#2a2f55;--accent:#818cf8;--accent2:#22d3ee;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:0 18px 48px}
+.hero{margin:0 -18px 28px;padding:44px 18px 34px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-align:center}
+.hero small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-size:.75rem}
+.hero h1{margin:.3em 0 .2em;font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.15}
+.hero p{margin:0 auto;max-width:560px;opacity:.92}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:-52px 0 26px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;box-shadow:0 6px 18px rgba(30,30,80,.08)}
+.stat b{display:block;font-size:1.7rem;color:var(--accent)}
+.stat span{font-size:.8rem;color:var(--muted)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
+.tools input{flex:1 1 200px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:.85rem}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+h2.year{margin:26px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:10px}
+h2.year::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{display:block;color:inherit;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px;padding:16px;transition:transform .15s,box-shadow .15s}
+a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(30,30,80,.12)}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--c);margin-bottom:6px}
+.card h3{margin:0 0 8px;font-size:1rem;line-height:1.3}
+.meta{display:flex;justify-content:space-between;gap:8px;font-size:.82rem;color:var(--muted)}
+.cert{margin-top:10px;font-size:.82rem;font-weight:600;color:var(--c)}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+footer{margin-top:36px;text-align:center;font-size:.82rem;color:var(--muted)}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<small>Repositorio de formación</small>
+<h1>Gerardo Narvaez De Los Santos</h1>
+<p>Cursos, diplomados y programas en ciencia de datos, bases de datos, Excel, Power BI y programación. Haz clic en un curso para ver su certificado.</p>
+</header>
+<section class="stats" id="stats"></section>
+<div class="tools">
+<input id="q" type="search" placeholder="Buscar curso o institución…" aria-label="Buscar">
+<span id="chips"></span>
+</div>
+<main id="list"></main>
+<footer>
+<a href="https://www.linkedin.com/in/gerardo-narvaez-abb24a371">LinkedIn</a> · <a href="https://github.com/gsantos1601-sys">GitHub</a>
+</footer>
+</div>
+<script>
+var CATS={datos:["Datos y BI","--c-datos"],excel:["Excel","--c-excel"],sql:["SQL","--c-sql"],prog:["Programación","--c-prog"],idioma:["Idiomas","--c-idioma"]};
+
+/* Cada curso: [nombre, institución, fecha, año, categoría, ARCHIVO]
+   ARCHIVO = nombre del PDF dentro de la carpeta certificados/, SIN la extensión .pdf
+   y escrito exactamente igual (mayúsculas, espacios y tildes incluidos).
+   Si lo dejas vacío ("") la tarjeta no será clicable. */
+var C=[
+["Ciencia de Datos – Nivel Avanzado","INDOTEL / BID / Cymetria","Noviembre 2026",2026,"datos","CERTIFICADO CIENCIA DE DATOS AVANZADO INDOTEL"],
+["Programación con Python Intermedio (preparación PCAP)","ITLA","Octubre 2026",2026,"prog",""],
+["Universidad Excel: Básico, Intermedio y Avanzado","Udemy","Septiembre 2026",2026,"excel","Curso Excel -AVANZADO udemy"],
+["Programación SQL","ITLA","Julio – Septiembre 2026",2026,"sql","CURSO SQL ITLA"],
+["Ciencia de Datos – Nivel Intermedio","INDOTEL / BID / Cymetria","Junio 2026",2026,"datos","CERTIFICADO CIENCIA DE DATOS INTERMEDIO INDOTEL"],
+["Paradigma de Programación Orientada a Objetos","Aprende.org","Junio 2026",2026,"prog","Certificado Paradigma de programación (orientado a objetos)"],
+["Diplomado de Base de Datos SQL","ITLA","Abril – Julio 2025",2025,"sql","DIPLOMADO DE BASE DE DATOS SQL ITLA"],
+["Advanced Excel: Formulas, Functions, VBA Macros","Udemy","Junio 2025",2025,"excel","Curso Formulas, Functions, VBA en excel Udemy"],
+["Excel Online Completo: De Básico a Profesional","Udemy","Mayo 2024",2024,"excel","Curso Excel Profesional udemy"],
+["The SQL Programming Essentials Immersive Training","Udemy","Mayo 2024",2024,"sql","Certificado The SQL Programming Essentials Udemy"],
+["Microsoft Power BI: Curso de Power BI Desktop","Udemy","Febrero 2024",2024,"datos","Curso Power BI Desktop Udemy"],
+["Analista de Datos Avanzado con Power BI","PYV","Junio – Octubre 2023",2023,"datos","Diplomado Analista de datos avanzados con power bi PYV"],
+["Fundamentos de Excel Avanzado","INFOTEP","Junio 2023",2023,"excel","Curso FUNDAMENTOS DE EXCEL AVANZADO INFOTEP"],
+["Programa de Inglés de Inmersión","MESCyT","Enero – Diciembre 2022",2022,"idioma","Certificado ingles Inmersion Gerardo Narvaez 2022 (830 Horas)"]
+];
+
+var cat="all",q="";
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function stats(){
+var inst={};C.forEach(function(c){inst[c[1]]=1});
+var h=[[C.length,"cursos y programas"],[Object.keys(inst).length,"instituciones"],[Object.keys(CATS).length,"áreas"],[new Date().getFullYear()-2022+1,"años aprendiendo"]];
+document.getElementById("stats").innerHTML=h.map(function(x){return'<div class="stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")}
+function chips(){
+var h='<button class="chip'+(cat=="all"?" on":"")+'" data-c="all">Todos</button> ';
+for(var k in CATS)h+='<button class="chip'+(cat==k?" on":"")+'" data-c="'+k+'">'+CATS[k][0]+'</button> ';
+var el=document.getElementById("chips");el.innerHTML=h;
+el.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){cat=b.dataset.c;chips();render()}})}
+function render(){
+var items=C.filter(function(c){return(cat=="all"||c[4]==cat)&&(c[0]+" "+c[1]).toLowerCase().indexOf(q)>-1});
+if(!items.length){document.getElementById("list").innerHTML='<p class="empty">No hay cursos con ese filtro.</p>';return}
+var out="",y=0;
+items.forEach(function(c){
+if(c[3]!=y){if(y)out+="</div>";y=c[3];out+='<h2 class="year">'+y+'</h2><div class="grid">'}
+var inner='<span class="tag">'+CATS[c[4]][0]+'</span><h3>'+esc(c[0])+'</h3><div class="meta"><span>'+esc(c[1])+'</span><span>'+esc(c[2])+'</span></div>';
+var style=' style="--c:var('+CATS[c[4]][1]+')"';
+if(c[5]){out+='<a class="card" href="'+esc("certificados/"+encodeURIComponent(c[5]+".pdf"))+'" target="_blank" rel="noopener"'+style+'>'+inner+'<div class="cert">Ver certificado (PDF) →</div></a>'}
+else{out+='<div class="card"'+style+'>'+inner+'</div>'}});
+document.getElementById("list").innerHTML=out+"</div>"}
+document.getElementById("q").oninput=function(e){q=e.target.value.toLowerCase();render()};
+stats();chips();render();
+</script>
+</body>
+</html>

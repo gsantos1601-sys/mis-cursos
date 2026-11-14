@@ -3,56 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Repositorio de formación · Gerardo Narvaez De Los Santos</title>
+<title>Dashboard de formación · Gerardo Narvaez De Los Santos</title>
 <style>
-:root{--bg:#f5f6fb;--card:#fff;--text:#1b1f3b;--muted:#5d6385;--line:#e3e5f1;--accent:#4f46e5;--accent2:#06b6d4;
+:root{--bg:#f3f5f9;--card:#fff;--text:#172036;--muted:#667089;--line:#e2e6ef;--accent:#2563eb;--track:#eef1f7;
 --c-datos:#7c3aed;--c-excel:#16a34a;--c-sql:#0284c7;--c-prog:#ea580c;--c-idioma:#db2777}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1226;--card:#181c38;--text:#eceefb;--muted:#9aa0c7;--line:#2a2f55;--accent:#818cf8;--accent2:#22d3ee;color-scheme:dark}}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1424;--card:#161d33;--text:#e8ecf8;--muted:#8f99b8;--line:#263052;--accent:#60a5fa;--track:#1f2845;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-.wrap{max-width:1000px;margin:0 auto;padding:0 18px 48px}
-.hero{margin:0 -18px 28px;padding:44px 18px 34px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-align:center}
-.hero small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-size:.75rem}
-.hero h1{margin:.3em 0 .2em;font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.15}
-.hero p{margin:0 auto;max-width:560px;opacity:.92}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:-52px 0 26px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;box-shadow:0 6px 18px rgba(30,30,80,.08)}
-.stat b{display:block;font-size:1.7rem;color:var(--accent)}
-.stat span{font-size:.8rem;color:var(--muted)}
-.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:22px}
-.tools input{flex:1 1 200px;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit}
-.chip{border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:.85rem}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 18px 48px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:20px}
+h1{margin:0;font-size:1.6rem}
+header p{margin:2px 0 0;color:var(--muted)}
+nav a{color:var(--accent);text-decoration:none;margin-left:14px;font-size:.9rem}
+nav a:hover{text-decoration:underline}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.kpi,.panel{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.kpi{padding:14px 16px}
+.kpi span{display:block;font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.kpi b{font-size:2rem;line-height:1.2}
+.kpi small{color:var(--muted)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-bottom:14px}
+.panel{padding:16px}
+.panel h2{margin:0 0 12px;font-size:.95rem}
+.cols{display:flex;align-items:flex-end;gap:12px;height:170px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.8rem;color:var(--muted)}
+.col i{display:block;width:100%;max-width:46px;background:var(--accent);border-radius:5px 5px 0 0;min-height:3px}
+.col b{color:var(--text);margin-bottom:3px}
+.row{display:grid;grid-template-columns:minmax(80px,38%) 1fr 22px;gap:8px;align-items:center;width:100%;padding:4px 0;border:0;background:none;color:var(--text);font:inherit;font-size:.85rem;text-align:left}
+button.row{cursor:pointer}
+button.row:hover .fill{opacity:.8}
+.track{background:var(--track);border-radius:4px;height:12px}
+.fill{height:100%;border-radius:4px;background:var(--col,var(--accent))}
+.row em{font-style:normal;color:var(--muted);text-align:right}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.bar h2{margin:0 auto 0 0}
+.bar input{padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:inherit;font-size:.85rem}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--text);padding:5px 11px;border-radius:999px;cursor:pointer;font:inherit;font-size:.8rem}
 .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
-h2.year{margin:26px 0 12px;font-size:1.15rem;display:flex;align-items:center;gap:10px}
-h2.year::after{content:"";flex:1;height:1px;background:var(--line)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.card{display:block;color:inherit;text-decoration:none;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:14px;padding:16px;transition:transform .15s,box-shadow .15s}
-a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(30,30,80,.12)}
-.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--c);margin-bottom:6px}
-.card h3{margin:0 0 8px;font-size:1rem;line-height:1.3}
-.meta{display:flex;justify-content:space-between;gap:8px;font-size:.82rem;color:var(--muted)}
-.cert{margin-top:10px;font-size:.82rem;font-weight:600;color:var(--c)}
-.empty{text-align:center;color:var(--muted);padding:40px 0}
-footer{margin-top:36px;text-align:center;font-size:.82rem;color:var(--muted)}
-footer a{color:var(--accent)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td.n{white-space:normal;min-width:240px}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);cursor:pointer;user-select:none}
+th:hover{color:var(--accent)}
+tr:hover td{background:var(--track)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--col)}
+td a{color:var(--accent);text-decoration:none;font-weight:600}
+td a:hover{text-decoration:underline}
+.muted{color:var(--muted)}
+footer{margin-top:18px;font-size:.8rem;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="hero">
-<small>Repositorio de formación</small>
-<h1>Gerardo Narvaez De Los Santos</h1>
-<p>Cursos, diplomados y programas en ciencia de datos, bases de datos, Excel, Power BI y programación. Haz clic en un curso para ver su certificado.</p>
+<header>
+<div><h1>Dashboard de formación</h1><p>Gerardo Narvaez De Los Santos · Analista de Datos · BI y automatización</p></div>
+<nav><a href="https://www.linkedin.com/in/gerardo-narvaez-abb24a371">LinkedIn</a><a href="https://github.com/gsantos1601-sys">GitHub</a></nav>
 </header>
-<section class="stats" id="stats"></section>
-<div class="tools">
-<input id="q" type="search" placeholder="Buscar curso o institución…" aria-label="Buscar">
-<span id="chips"></span>
-</div>
-<main id="list"></main>
-<footer>
-<a href="https://www.linkedin.com/in/gerardo-narvaez-abb24a371">LinkedIn</a> · <a href="https://github.com/gsantos1601-sys">GitHub</a>
-</footer>
+<section class="kpis" id="kpis"></section>
+<section class="charts">
+<div class="panel"><h2>Cursos por año</h2><div class="cols" id="byYear"></div></div>
+<div class="panel"><h2>Cursos por área <span class="muted">(clic para filtrar)</span></h2><div id="byCat"></div></div>
+<div class="panel"><h2>Cursos por institución</h2><div id="byInst"></div></div>
+</section>
+<section class="panel">
+<div class="bar"><h2>Detalle de cursos</h2><input id="q" type="search" placeholder="Buscar…" aria-label="Buscar"><span id="chips"></span></div>
+<div class="tw"><table><thead><tr>
+<th data-k="3">Año</th><th data-k="0">Curso</th><th data-k="1">Institución</th><th data-k="4">Área</th><th>Período</th><th>Certificado</th>
+</tr></thead><tbody id="rows"></tbody></table></div>
+</section>
+<footer>Fuente: certificados propios · Actualizado en noviembre de 2026</footer>
 </div>
 <script>
 var CATS={datos:["Datos y BI","--c-datos"],excel:["Excel","--c-excel"],sql:["SQL","--c-sql"],prog:["Programación","--c-prog"],idioma:["Idiomas","--c-idioma"]};
@@ -60,7 +80,7 @@ var CATS={datos:["Datos y BI","--c-datos"],excel:["Excel","--c-excel"],sql:["SQL
 /* Cada curso: [nombre, institución, fecha, año, categoría, ARCHIVO]
    ARCHIVO = nombre del PDF dentro de la carpeta certificados/, SIN la extensión .pdf
    y escrito exactamente igual (mayúsculas, espacios y tildes incluidos).
-   Si lo dejas vacío ("") la tarjeta no será clicable. */
+   Si lo dejas vacío ("") no se muestra enlace. */
 var C=[
 ["Ciencia de Datos – Nivel Avanzado","INDOTEL / BID / Cymetria","Noviembre 2026",2026,"datos","CERTIFICADO CIENCIA DE DATOS AVANZADO INDOTEL"],
 ["Programación con Python Intermedio (preparación PCAP)","ITLA","Octubre 2026",2026,"prog",""],
@@ -77,31 +97,39 @@ var C=[
 ["Fundamentos de Excel Avanzado","INFOTEP","Junio 2023",2023,"excel","Curso FUNDAMENTOS DE EXCEL AVANZADO INFOTEP"],
 ["Programa de Inglés de Inmersión","MESCyT","Enero – Diciembre 2022",2022,"idioma","Certificado ingles Inmersion Gerardo Narvaez 2022 (830 Horas)"]
 ];
-
-var cat="all",q="";
-function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function stats(){
-var inst={};C.forEach(function(c){inst[c[1]]=1});
-var h=[[C.length,"cursos y programas"],[Object.keys(inst).length,"instituciones"],[Object.keys(CATS).length,"áreas"],[new Date().getFullYear()-2022+1,"años aprendiendo"]];
-document.getElementById("stats").innerHTML=h.map(function(x){return'<div class="stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")}
+var cat="all",q="",sk=null,sd=1;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function count(i){var o={};C.forEach(function(c){o[c[i]]=(o[c[i]]||0)+1});return o}
+function kpis(){
+var y=C.map(function(c){return c[3]}),inst=Object.keys(count(1)).length;
+var k=[["Cursos y programas",C.length,"en total"],["Con certificado",C.filter(function(c){return c[5]}).length,"de "+C.length],["Instituciones",inst,"distintas"],["Cursos en 2026",C.filter(function(c){return c[3]==2026}).length,"en lo que va del año"],["Años de formación",Math.max.apply(0,y)-Math.min.apply(0,y)+1,Math.min.apply(0,y)+"–"+Math.max.apply(0,y)]];
+document.getElementById("kpis").innerHTML=k.map(function(x){return'<div class="kpi"><span>'+x[0]+'</span><b>'+x[1]+'</b><small>'+x[2]+'</small></div>'}).join("")}
+function hbars(id,obj,colorOf,click){
+var ks=Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]}),m=obj[ks[0]];
+document.getElementById(id).innerHTML=ks.map(function(k){
+var lab=click?CATS[k][0]:k,st=' style="--col:'+(colorOf?colorOf(k):"var(--accent)")+'"';
+var inner='<span>'+esc(lab)+'</span><div class="track"><div class="fill" style="width:'+obj[k]/m*100+'%"></div></div><em>'+obj[k]+'</em>';
+return click?'<button class="row" data-c="'+k+'"'+st+'>'+inner+'</button>':'<div class="row"'+st+'>'+inner+'</div>'}).join("");
+if(click)document.querySelectorAll("#"+id+" .row").forEach(function(b){b.onclick=function(){cat=cat==b.dataset.c?"all":b.dataset.c;chips();rows()}})}
+function charts(){
+var y=count(3),ys=Object.keys(y).sort(),m=Math.max.apply(0,ys.map(function(k){return y[k]}));
+document.getElementById("byYear").innerHTML=ys.map(function(k){return'<div class="col"><b>'+y[k]+'</b><i style="height:'+y[k]/m*78+'%"></i><span>'+k+'</span></div>'}).join("");
+hbars("byCat",count(4),function(k){return"var("+CATS[k][1]+")"},true);
+hbars("byInst",count(1))}
 function chips(){
-var h='<button class="chip'+(cat=="all"?" on":"")+'" data-c="all">Todos</button> ';
+var h='<button class="chip'+(cat=="all"?" on":"")+'" data-c="all">Todas</button> ';
 for(var k in CATS)h+='<button class="chip'+(cat==k?" on":"")+'" data-c="'+k+'">'+CATS[k][0]+'</button> ';
 var el=document.getElementById("chips");el.innerHTML=h;
-el.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){cat=b.dataset.c;chips();render()}})}
-function render(){
-var items=C.filter(function(c){return(cat=="all"||c[4]==cat)&&(c[0]+" "+c[1]).toLowerCase().indexOf(q)>-1});
-if(!items.length){document.getElementById("list").innerHTML='<p class="empty">No hay cursos con ese filtro.</p>';return}
-var out="",y=0;
-items.forEach(function(c){
-if(c[3]!=y){if(y)out+="</div>";y=c[3];out+='<h2 class="year">'+y+'</h2><div class="grid">'}
-var inner='<span class="tag">'+CATS[c[4]][0]+'</span><h3>'+esc(c[0])+'</h3><div class="meta"><span>'+esc(c[1])+'</span><span>'+esc(c[2])+'</span></div>';
-var style=' style="--c:var('+CATS[c[4]][1]+')"';
-if(c[5]){out+='<a class="card" href="'+esc("certificados/"+encodeURIComponent(c[5]+".pdf"))+'" target="_blank" rel="noopener"'+style+'>'+inner+'<div class="cert">Ver certificado (PDF) →</div></a>'}
-else{out+='<div class="card"'+style+'>'+inner+'</div>'}});
-document.getElementById("list").innerHTML=out+"</div>"}
-document.getElementById("q").oninput=function(e){q=e.target.value.toLowerCase();render()};
-stats();chips();render();
+el.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){cat=b.dataset.c;chips();rows()}})}
+function rows(){
+var items=C.map(function(c,i){return c.concat(i)}).filter(function(c){return(cat=="all"||c[4]==cat)&&(c[0]+" "+c[1]).toLowerCase().indexOf(q)>-1});
+if(sk!==null)items.sort(function(a,b){var x=a[sk],y=b[sk];return(x>y?1:x<y?-1:a[6]-b[6])*sd});
+document.getElementById("rows").innerHTML=items.length?items.map(function(c){
+var cert=c[5]?'<a href="'+esc("certificados/"+encodeURIComponent(c[5]+".pdf"))+'" target="_blank" rel="noopener">Ver PDF ↗</a>':'<span class="muted">Pendiente</span>';
+return'<tr><td>'+c[3]+'</td><td class="n">'+esc(c[0])+'</td><td>'+esc(c[1])+'</td><td><span class="dot" style="--col:var('+CATS[c[4]][1]+')"></span>'+CATS[c[4]][0]+'</td><td>'+esc(c[2])+'</td><td>'+cert+'</td></tr>'}).join(""):'<tr><td colspan="6" class="muted">Sin resultados.</td></tr>'}
+document.querySelectorAll("th[data-k]").forEach(function(t){t.onclick=function(){var k=+t.dataset.k;sd=sk===k?-sd:(k==3?-1:1);sk=k;rows()}});
+document.getElementById("q").oninput=function(e){q=e.target.value.toLowerCase();rows()};
+kpis();charts();chips();rows();
 </script>
 </body>
 </html>
